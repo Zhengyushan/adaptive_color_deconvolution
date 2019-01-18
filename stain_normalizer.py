@@ -30,12 +30,19 @@ class StainNormalizer(object):
         pixels = pixels[np.random.choice(pixels.shape[0], min(self._pn * 20, pixels.shape[0]))]
         od = -np.log((np.asarray(pixels, np.float) + 1) / 256.0)
         tmp = np.mean(od, axis=1)
+
+        # filter the background pixels (white or black)
         od = od[(tmp > 0.3) & (tmp < -np.log(30 / 256))]
         od = od[np.random.choice(od.shape[0], min(self._pn, od.shape[0]))]
 
         return od
 
     def extract_adaptive_cd_params(self, images):
+        """
+        :param images: RGB uint8 format in shape of [k, m, n, 3], where
+                       k is the number of ROIs sampled from a WSI, [m, n] is 
+                       the size of ROI.
+        """
         od_data = self.sampling_data(images)
         input_od = tf.placeholder(dtype=tf.float32, shape=[None, 3])
         target, cd = acd_model(input_od)

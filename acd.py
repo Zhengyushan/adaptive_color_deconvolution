@@ -6,7 +6,13 @@ init_varphi = np.asarray([[0.6060, 1.2680, 0.7989],
                           [1.2383, 1.2540, 0.3927]])
 
 
+
 def acd_model(input_od, lambda_p=0.002, lambda_b=10, lambda_e=1, eta=0.6, gamma=0.5):
+    """
+    Stain matrix estimation via method of 
+    "Yushan Zheng, et al., Adaptive Color Deconvolution for Histological WSI Normalization."
+
+    """
     alpha = tf.Variable(init_varphi[0], dtype='float32')
     beta = tf.Variable(init_varphi[1], dtype='float32')
     w = [tf.Variable(1.0, dtype='float32'), tf.Variable(1.0, dtype='float32'), 1.0]

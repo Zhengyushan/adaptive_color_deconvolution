@@ -1,9 +1,18 @@
+"""
+An example for histological images color normalization based on the adaptive color deconvolution as described in the paper:
+
+Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xue. (2019)
+Adaptive Color Deconvolution for Histological WSI Normalization.
+Computer Methods and Programs in Biomedicine, Accept
+"""
+
 import cv2
 import numpy as np
 import os
 import time
 from stain_normalizer import StainNormalizer
 
+# disable GPU
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
