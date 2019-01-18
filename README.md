@@ -21,7 +21,7 @@ Please cite following papers if you use this code in your own work:
 @article{zheng2019adaptive,
   title={Adaptive Color Deconvolution for Histological WSI Normalization},
   author={Zheng, Yushan and Jiang, Zhiguo and Zhang, Haopeng and Xie, Fengying and Shi, Jun and Xue, Chenghai},
-  journal={Adaptive Color Deconvolution for Histological WSI Normalization},
+  journal={Computer Methods and Programs in Biomedicine},
   year={2019}
 }
 ```
