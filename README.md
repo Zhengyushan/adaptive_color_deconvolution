@@ -1,11 +1,11 @@
-# AdaptiveColorDeconvolution (ACD)
+# Adaptive Color Deconvolution (ACD)
 ============
 
 This is an implementation of the color normalization for histological images based on the adaptive color deconvolution as described in our paper:
 
-Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xue. (2019)
-Adaptive Color Deconvolution for Histological WSI Normalization.
-Computer Methods and Programs in Biomedicine, Accept
+Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xu,
+Adaptive Color Deconvolution for Histological WSI Normalization,
+Computer Methods and Programs in Biomedicine, 2019
 
 ## Requirements
 * TensorFlow (1.3 or later)
@@ -15,7 +15,7 @@ Computer Methods and Programs in Biomedicine, Accept
 
 ## Cite
 
-Please cite following papers if you use this code in your own work:
+Please cite the following paper if you use this code in your own work:
 
 ```
 @article{zheng2019adaptive,
