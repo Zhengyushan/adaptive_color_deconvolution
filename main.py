@@ -6,10 +6,12 @@ Adaptive Color Deconvolution for Histological WSI Normalization.
 Computer Methods and Programs in Biomedicine, Accept
 """
 
-import cv2
-import numpy as np
 import os
 import time
+
+import cv2
+import numpy as np
+
 from stain_normalizer import StainNormalizer
 
 # disable GPU

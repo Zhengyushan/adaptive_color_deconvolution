@@ -1,3 +1,5 @@
 
 *.pyc
 data/result
+*.iml
+*.xml

@@ -10,14 +10,21 @@ class StainNormalizer(object):
         self._bs = batch_size
         self._step_per_epoch = int(pixel_number / batch_size)
         self._epoch = int(step / self._step_per_epoch)
+        self._template_dc_mat = None
+        self._template_w_mat = None
 
     def fit(self, images):
-        opt_cd_mat = self.extract_adaptive_cd_params(images)
-        self._template_mat = np.linalg.inv(opt_cd_mat)
+        opt_cd_mat, opt_w_mat = self.extract_adaptive_cd_params(images)
+        self._template_dc_mat = opt_cd_mat
+        self._template_w_mat = opt_w_mat
 
     def transform(self, images):
-        opt_cd_mat = self.extract_adaptive_cd_params(images)
-        transform_mat = np.matmul(opt_cd_mat, self._template_mat)
+        if self._template_dc_mat is None:
+            raise AssertionError('Run fit function first')
+
+        opt_cd_mat, opt_w_mat = self.extract_adaptive_cd_params(images)
+        transform_mat = np.matmul(opt_cd_mat * opt_w_mat,
+                                  np.linalg.inv(self._template_dc_mat * self._template_w_mat))
 
         od = -np.log((np.asarray(images, np.float) + 1) / 256.0)
         normed_od = np.matmul(od, transform_mat)
@@ -45,7 +52,7 @@ class StainNormalizer(object):
         """
         od_data = self.sampling_data(images)
         input_od = tf.placeholder(dtype=tf.float32, shape=[None, 3])
-        target, cd = acd_model(input_od)
+        target, cd, w = acd_model(input_od)
         init = tf.global_variables_initializer()
 
         with tf.Session() as sess:
@@ -53,6 +60,6 @@ class StainNormalizer(object):
             for ep in range(self._epoch):
                 for step in range(self._step_per_epoch):
                     sess.run(target, {input_od: od_data[step * self._bs:(step + 1) * self._bs]})
-            opt_cd_mat = sess.run(cd)
-
-        return opt_cd_mat
+            opt_cd = sess.run(cd)
+            opt_w = sess.run(w)
+        return opt_cd, opt_w
