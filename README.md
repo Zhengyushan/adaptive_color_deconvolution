@@ -5,7 +5,7 @@ This is an implementation of the color normalization for histological images bas
 
 Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xu,
 Adaptive Color Deconvolution for Histological WSI Normalization,
-Computer Methods and Programs in Biomedicine, 2019
+Computer Methods and Programs in Biomedicine, v170C (2019) pp.107-120
 
 ## Requirements
 * TensorFlow (1.3 or later)

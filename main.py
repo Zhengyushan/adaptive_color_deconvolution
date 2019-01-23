@@ -1,9 +1,11 @@
 """
 An example for histological images color normalization based on the adaptive color deconvolution as described in the paper:
+https://github.com/Zhengyushan/adaptive_color_deconvolution
 
-Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xue. (2019)
+Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xue.
 Adaptive Color Deconvolution for Histological WSI Normalization.
-Computer Methods and Programs in Biomedicine, Accept
+Computer Methods and Programs in Biomedicine, v170C (2019) pp.107-120.
+
 """
 
 import os
