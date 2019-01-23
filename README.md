@@ -18,10 +18,13 @@ Computer Methods and Programs in Biomedicine, v170C (2019) pp.107-120
 Please cite the following paper if you use this code in your own work:
 
 ```
-@article{zheng2019adaptive,
-  title={Adaptive Color Deconvolution for Histological WSI Normalization},
-  author={Zheng, Yushan and Jiang, Zhiguo and Zhang, Haopeng and Xie, Fengying and Shi, Jun and Xue, Chenghai},
-  journal={Computer Methods and Programs in Biomedicine},
-  year={2019}
+@article{zhengCMPB2019,
+  title   = {Adaptive color deconvolution for histological WSI normalization},
+  author  = {Yushan Zheng and Zhiguo Jiang and Haopeng Zhang and Fengying Xie and Jun Shi and Chenghai Xue},
+  journal = {Computer Methods and Programs in Biomedicine)},
+  volume  = {170},
+  pages   = {107-120},
+  doi     = {doi.org/10.1016/j.cmpb.2019.01.008},
+  year    = {2019}
 }
 ```
