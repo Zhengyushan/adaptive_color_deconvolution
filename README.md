@@ -3,7 +3,7 @@
 
 This is an implementation of the color normalization for histological images based on the adaptive color deconvolution as described in our paper:
 
-Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xu,
+Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xue,
 Adaptive Color Deconvolution for Histological WSI Normalization,
 Computer Methods and Programs in Biomedicine, v170C (2019) pp.107-120
 
