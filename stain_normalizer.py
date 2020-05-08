@@ -4,7 +4,6 @@ from acd import acd_model
 
 
 class StainNormalizer(object):
-
     def __init__(self, pixel_number=100000, step=300, batch_size=1500):
         self._pn = pixel_number
         self._bs = batch_size
@@ -32,13 +31,29 @@ class StainNormalizer(object):
 
         return np.maximum(np.minimum(normed_images, 255), 0)
 
+    def he_decomposition(self, images, od_output=True):
+        if self._template_dc_mat is None:
+            raise AssertionError('Run fit function first')
+
+        opt_cd_mat, _ = self.extract_adaptive_cd_params(images)
+
+        od = -np.log((np.asarray(images, np.float) + 1) / 256.0)
+        normed_od = np.matmul(od, opt_cd_mat)
+
+        if od_output:
+            return normed_od
+        else:
+            normed_images = np.exp(-normed_od) * 256 - 1
+            return np.maximum(np.minimum(normed_images, 255), 0)
+
+
     def sampling_data(self, images):
         pixels = np.reshape(images, (-1, 3))
         pixels = pixels[np.random.choice(pixels.shape[0], min(self._pn * 20, pixels.shape[0]))]
         od = -np.log((np.asarray(pixels, np.float) + 1) / 256.0)
-        tmp = np.mean(od, axis=1)
-
+        
         # filter the background pixels (white or black)
+        tmp = np.mean(od, axis=1)
         od = od[(tmp > 0.3) & (tmp < -np.log(30 / 256))]
         od = od[np.random.choice(od.shape[0], min(self._pn, od.shape[0]))]
 

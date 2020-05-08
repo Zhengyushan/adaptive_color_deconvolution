@@ -4,13 +4,10 @@ https://github.com/Zhengyushan/adaptive_color_deconvolution
 
 Yushan Zheng, Zhiguo Jiang, Haopeng Zhang, Fengying Xie, Jun Shi, and Chenghai Xue.
 Adaptive Color Deconvolution for Histological WSI Normalization.
-Computer Methods and Programs in Biomedicine, v170C (2019) pp.107-120.
+Computer Methods and Programs in Biomedicine, v170 (2019) pp.107-120.
 
 """
-
 import os
-import time
-
 import cv2
 import numpy as np
 
@@ -26,32 +23,34 @@ result_dir = 'data/result'
 
 # load template images
 template_list = os.listdir(template_dir)
-temp_images = np.zeros((template_list.__len__(), 2048, 2048, 3), np.uint8)
-for i, name in enumerate(template_list):
-    temp_images[i] = cv2.imread(os.path.join(template_dir, name))
+temp_images = np.asarray([cv2.imread(os.path.join(template_dir, name)) for name in template_list])
 
-# fit
-st = time.time()
+# extract the stain parameters of the template slide
 normalizer = StainNormalizer()
-normalizer.fit(temp_images)
-print('fit time', time.time() - st)
+normalizer.fit(temp_images[:,:,:,[2,1,0]]) #BGR2RGB
 
-# normalization
 if not os.path.exists(result_dir):
     os.makedirs(result_dir)
 
+# normalization
 slide_list = os.listdir(source_image_dir)
 for s in slide_list:
     print('normalize slide', s)
     slide_dir = os.path.join(source_image_dir, s)
     image_list = os.listdir(slide_dir)
-    images = np.zeros((image_list.__len__(), 2048, 2048, 3), np.uint8)
-    for i, name in enumerate(image_list):
-        images[i] = cv2.imread(os.path.join(slide_dir, name))
+    images = np.asarray([cv2.imread(os.path.join(slide_dir, name)) for name in image_list])
 
-    st = time.time()
-    results = normalizer.transform(images)
-    print('transform time', time.time() - st)
+    ## color transform
+    results = normalizer.transform(images[:,:,:,[2,1,0]]) #BGR2RGB
+    # display
     for i, result in enumerate(results):
-        cv2.imwrite(os.path.join(result_dir, s) + '_{}_origin.jpg'.format(i), images[i])
-        cv2.imwrite(os.path.join(result_dir, s) + '_{}_norm.jpg'.format(i), result)
+        cv2.imwrite(os.path.join(result_dir, s + '_{}_origin.jpg'.format(i)), images[i])
+        cv2.imwrite(os.path.join(result_dir, s + '_{}_norm.jpg'.format(i)) , result[:,:,[2,1,0]]) #RGB2BGR
+
+    ## h&e decomposition
+    he_channels = normalizer.he_decomposition(images[:,:,:,[2,1,0]], od_output=True) #BGR2RGB
+    # debug display
+    for i, result in enumerate(he_channels):
+        cv2.imwrite(os.path.join(result_dir, s + '_{}_h.jpg'.format(i)), result[:,:,0]*128)
+        cv2.imwrite(os.path.join(result_dir, s + '_{}_e.jpg'.format(i)), result[:,:,1]*128)
+
